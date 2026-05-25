@@ -42,9 +42,10 @@ const x = operatorElements.map((i) => i.textContent);
 const numOneClick =
     numElements.forEach((element) => {
         element.addEventListener('click', () => {
-            if (!(display.textContent.split('').includes(...x))) {
+            let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
+            if (!(display.textContent.split('').some(xPresent))) { //fix this
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
-            } else if (display.textContent.split('').includes(...x)) {
+            } else if (display.textContent.split('').some(xPresent)) {
                 display.innerText = `${display.innerText}` + '';
             }
 
@@ -52,7 +53,17 @@ const numOneClick =
     });
 //first variable
 const storeVariableOne = () => {
-    let indexOfOperator = display.innerText.split('').indexOf(...x);
+    let xIndex = ()=> {
+        let newArray = display.innerText.split('');
+        let filteredArray = newArray.filter((item) => {
+            for (i of x) {
+                if (i==item) {
+                    return item;
+                }
+            }
+        }); return filteredArray[0];
+    }
+    let indexOfOperator = display.innerText.split('').indexOf(xIndex()); //fix this
     let numOneString = display.innerText.split('').slice(0, indexOfOperator).join('');
     return numOneString;
 };
@@ -62,9 +73,10 @@ storeVariableOne();
 const numTwoClick =
     numElements.forEach((element) => {
         element.addEventListener('click', () => {
-            if (display.textContent.split('').includes(...x)) {
+            let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
+            if (display.textContent.split('').some(xPresent)) { //fix thisy
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
-            } else if (!(display.textContent.split('').includes(...x))) {
+            } else if (!(display.textContent.split('').some(xPresent))) {
                 display.innerText = `${display.innerText}` + '';
             }
         });
@@ -72,10 +84,20 @@ const numTwoClick =
 
 //second variable
 const storeVariableTwo = () => {
-    let indexOfOperator = display.innerText.split('').indexOf(...x);
-    let numOneString = display.innerText.split('').slice(indexOfOperator+1).join('');
-    return numOneString;
-}
+    let xIndex = ()=> {
+        let newArray = display.innerText.split('');
+        let filteredArray = newArray.filter((item) => {
+            for (i of x) {
+                if (i==item) {
+                    return item;
+                }
+            }
+        }); return filteredArray[0];
+    }
+    let indexOfOperator = display.innerText.split('').indexOf(xIndex()); //fix this
+    let numTwoString = display.innerText.split('').slice(indexOfOperator+1).join('');
+    return numTwoString;
+};
 storeVariableTwo();
 
 //operator click management.
@@ -84,9 +106,10 @@ const operatorVar =
     operatorElements.forEach((element) => {
 
         element.addEventListener('click', () => {
-            if (!(display.textContent.split('').includes(...x))) {
+            let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
+            if (!(display.textContent.split('').some(xPresent))) { //fix this
                 return display.innerText = `${display.innerText}` + `${element.textContent}`;
-            } else if (display.textContent.split('').includes(...x)) {
+            } else if (display.textContent.split('').some(xPresent)) {
                 element.style.backgroundColor = 'red';
                 return display.innerText = `${display.innerText}` + '';
             }
@@ -95,10 +118,20 @@ const operatorVar =
 
 //operator variable
 const storeOperator = () => {
-    let indexOfOperator = display.innerText.split('').indexOf(...x);
-    let operatorString = display.innerText.split('').slice(indexOfOperator,indexOfOperator+1).toString();
+    let xIndex = ()=> {
+        let newArray = display.innerText.split('');
+        let filteredArray = newArray.filter((item) => {
+            for (i of x) {
+                if (i==item) {
+                    return item;
+                }
+            }
+        }); return filteredArray[0];
+    }
+    let indexOfOperator = display.innerText.split('').indexOf(xIndex()); //fix this
+    let operatorString = display.innerText.split('').slice(indexOfOperator, indexOfOperator+1).join('');
     return operatorString;
-}
+};
 storeOperator();
 
 //operate function
