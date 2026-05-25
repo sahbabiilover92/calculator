@@ -42,6 +42,9 @@ const x = operatorElements.map((i) => i.textContent);
 const numOneClick =
     numElements.forEach((element) => {
         element.addEventListener('click', () => {
+            if (display.innerText == 'ERROR'){
+                return display.innerText = '';
+            }
             let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
             if (!(display.textContent.split('').some(xPresent))) { //fix this
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
@@ -104,14 +107,20 @@ storeVariableTwo();
 const operatorVar =
 
     operatorElements.forEach((element) => {
-
         element.addEventListener('click', () => {
             let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
             if (!(display.textContent.split('').some(xPresent))) { //fix this
                 return display.innerText = `${display.innerText}` + `${element.textContent}`;
             } else if (display.textContent.split('').some(xPresent)) {
-                element.style.backgroundColor = 'red';
-                return display.innerText = `${display.innerText}` + '';
+                // element.style.backgroundColor = 'red';
+                // return display.innerText = `${display.innerText}` + '';
+                let x = Number(storeVariableOne());
+                let y = Number(storeVariableTwo());
+                let z = storeOperator();
+
+                const ourSolution = operate(x,y,z);
+                display.innerText = `${ourSolution.toFixed(2)}`;
+                return display.innerText = `${display.innerText}`+`${element.textContent}`;
             }
         });
     });
@@ -161,8 +170,12 @@ const findSolution = equals.addEventListener('click',()=>{
     let y = Number(storeVariableTwo());
     let z = storeOperator();
 
+    if(display.innerText == ''){
+        return display.innerText = 'ERROR';
+    }
+
     const ourSolution = operate(x,y,z);
-    return display.innerText = `${ourSolution}`;
+    return display.innerText = `${ourSolution.toFixed(2)}`;
 });
 
 //clear button click management
