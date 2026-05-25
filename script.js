@@ -1,8 +1,8 @@
 //functions for add, subtract, multiply, and divide.
-const addFunction = (x,y) => x+y;
-const subtractFunction = (x,y) => x-y;
-const multiplyFunction = (x,y) => x*y;
-const divideFunction = (x,y) => x/y;
+const addFunction = (x, y) => x + y;
+const subtractFunction = (x, y) => x - y;
+const multiplyFunction = (x, y) => x * y;
+const divideFunction = (x, y) => x / y;
 
 //OUR HTML ELEMENTS!!!
 
@@ -24,83 +24,116 @@ const subtract = document.getElementById('subtract');
 const multiply = document.getElementById('multiply');
 const divide = document.getElementById('divide');
 
+//miscellaneous buttons
+const equals = document.getElementById('btnEquals');
+const clear = document.getElementById('btnClear');
+
 //display
 const display = document.getElementById('display');
 
 //arrays to store numbers, operators, and operator text;
-let numElements = [one,two,three,four,five,six,seven,eight,nine,zero];
-let operatorElements = [add,subtract,multiply,divide];
-let x = operatorElements.map((i)=>i.textContent);
+let numElements = [one, two, three, four, five, six, seven, eight, nine, zero];
+let operatorElements = [add, subtract, multiply, divide];
+const x = operatorElements.map((i) => i.textContent);
 
 //variables for numbers in operation and operator.
-const numOneClick = 
-    numElements.forEach((element)=>{
-        element.addEventListener('click',()=> {
-            if(!(display.textContent.split('').includes(...x))){
+
+//first variable click management.
+const numOneClick =
+    numElements.forEach((element) => {
+        element.addEventListener('click', () => {
+            if (!(display.textContent.split('').includes(...x))) {
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
-            } else if (display.textContent.split('').includes(...x)){
+            } else if (display.textContent.split('').includes(...x)) {
                 display.innerText = `${display.innerText}` + '';
-            } 
-            
+            }
+
         });
-    })  
-    storeVariableOne = ()=>{
-        let indexOfOperator = display.innerText.split('').indexOf(...x);
-        let numOneString = display.innerText.split('').slice(0,indexOfOperator).join('');
-        return numOneString;
-    };
-    storeVariableOne();
+    });
+//first variable
+const storeVariableOne = () => {
+    let indexOfOperator = display.innerText.split('').indexOf(...x);
+    let numOneString = display.innerText.split('').slice(0, indexOfOperator).join('');
+    return numOneString;
+};
+storeVariableOne();
 
-
-            
-
-const numTwoClick = 
-    numElements.forEach((element)=>{
-        element.addEventListener('click',()=> {
-            if(display.textContent.split('').includes(...x)){
+//second variable click management.
+const numTwoClick =
+    numElements.forEach((element) => {
+        element.addEventListener('click', () => {
+            if (display.textContent.split('').includes(...x)) {
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
-            } else if (!(display.textContent.split('').includes(...x))){
-                 display.innerText = `${display.innerText}` + '';
-            }          
+            } else if (!(display.textContent.split('').includes(...x))) {
+                display.innerText = `${display.innerText}` + '';
+            }
         });
-    })
-    storeVariableTwo= ()=>{
-        let indexOfOperator = display.innerText.split('').indexOf(...x);
-        let numOneString = display.innerText.split('').slice(indexOfOperator).join('');
-        return numOneString;
-    };
-    storeVariableTwo();
+    });
 
+//second variable
+const storeVariableTwo = () => {
+    let indexOfOperator = display.innerText.split('').indexOf(...x);
+    let numOneString = display.innerText.split('').slice(indexOfOperator+1).join('');
+    return numOneString;
+}
+storeVariableTwo();
 
+//operator click management.
+const operatorVar =
 
-const operatorVar = 
+    operatorElements.forEach((element) => {
 
-    operatorElements.forEach((element)=>{
-
-        element.addEventListener('click',()=> {
-            if(!(display.textContent.split('').includes(...x))){
-               return display.innerText = `${display.innerText}` + `${element.textContent}`; 
-            } else if (display.textContent.split('').includes(...x)){
+        element.addEventListener('click', () => {
+            if (!(display.textContent.split('').includes(...x))) {
+                return display.innerText = `${display.innerText}` + `${element.textContent}`;
+            } else if (display.textContent.split('').includes(...x)) {
                 element.style.backgroundColor = 'red';
                 return display.innerText = `${display.innerText}` + '';
             }
-            });
+        });
     });
 
-const operate = function(numA,numB,operator){
+//operator variable
+const storeOperator = () => {
+    let indexOfOperator = display.innerText.split('').indexOf(...x);
+    let operatorString = display.innerText.split('').slice(indexOfOperator,indexOfOperator+1).toString();
+    return operatorString;
+}
+storeOperator();
+
+//operate function
+const operate = function (numA, numB, operator) {
+    let multiply = x[2];
+    let divide = x[3];
 
     switch (operator) {
-        case "add":
-            console.log(addFunction(numA,numB));
+        case "+":
+            return addFunction(numA, numB);
             break;
-        case "subtract":
-            console.log(subtractFunction(numA,numB));
+        case "-":
+            return subtractFunction(numA, numB);
             break;
-        case "multiply":
-            console.log(multiplyFunction(numA,numB));
+        case multiply:
+            return multiplyFunction(numA, numB);
             break;
-        case "divide":
-            console.log(divideFunction(numA,numB));
+        case divide:
+            return divideFunction(numA, numB);
             break;
     }
 };
+
+//equal button click management
+const findSolution = equals.addEventListener('click',()=>{
+    let x = Number(storeVariableOne());
+    let y = Number(storeVariableTwo());
+    let z = storeOperator();
+
+    const ourSolution = operate(x,y,z);
+    return display.innerText = `${ourSolution}`;
+});
+
+//clear button click management
+
+const clearDisplay = clear.addEventListener('click',()=>{
+    return display.textContent = '';
+});
