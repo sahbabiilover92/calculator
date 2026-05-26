@@ -1,4 +1,3 @@
-let shouldResetScreen = false;
 //functions for add, subtract, multiply, and divide.
 const addFunction = (x, y) => x + y;
 const subtractFunction = (x, y) => x - y;
@@ -43,14 +42,10 @@ const x = operatorElements.map((i) => i.textContent);
 const numOneClick =
     numElements.forEach((element) => {
         element.addEventListener('click', () => {
-            if (shouldResetScreen) {
-                display.innerText = '';
-                shouldResetScreen = false;
-            }
-            if (display.innerText == 'ERROR') {
+            if (display.innerText == 'ERROR'){
                 return display.innerText = '';
             }
-            let xPresent = (item) => (item == x[0] || item == x[1] || item == x[2] || item == x[3]);
+            let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
             if (!(display.textContent.split('').some(xPresent))) { //fix this
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
             } else if (display.textContent.split('').some(xPresent)) {
@@ -61,11 +56,11 @@ const numOneClick =
     });
 //first variable
 const storeVariableOne = () => {
-    let xIndex = () => {
+    let xIndex = ()=> {
         let newArray = display.innerText.split('');
         let filteredArray = newArray.filter((item) => {
             for (i of x) {
-                if (i == item) {
+                if (i==item) {
                     return item;
                 }
             }
@@ -81,11 +76,7 @@ storeVariableOne();
 const numTwoClick =
     numElements.forEach((element) => {
         element.addEventListener('click', () => {
-            if (shouldResetScreen) {
-                display.innerText = '';
-                shouldResetScreen = false;
-            }
-            let xPresent = (item) => (item == x[0] || item == x[1] || item == x[2] || item == x[3]);
+            let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
             if (display.textContent.split('').some(xPresent)) { //fix thisy
                 display.innerText = `${display.innerText}` + `${element.textContent}`;
             } else if (!(display.textContent.split('').some(xPresent))) {
@@ -96,18 +87,18 @@ const numTwoClick =
 
 //second variable
 const storeVariableTwo = () => {
-    let xIndex = () => {
+    let xIndex = ()=> {
         let newArray = display.innerText.split('');
         let filteredArray = newArray.filter((item) => {
             for (i of x) {
-                if (i == item) {
+                if (i==item) {
                     return item;
                 }
             }
         }); return filteredArray[0];
     }
     let indexOfOperator = display.innerText.split('').indexOf(xIndex()); //fix this
-    let numTwoString = display.innerText.split('').slice(indexOfOperator + 1).join('');
+    let numTwoString = display.innerText.split('').slice(indexOfOperator+1).join('');
     return numTwoString;
 };
 storeVariableTwo();
@@ -117,7 +108,7 @@ const operatorVar =
 
     operatorElements.forEach((element) => {
         element.addEventListener('click', () => {
-            let xPresent = (item) => (item == x[0] || item == x[1] || item == x[2] || item == x[3]);
+            let xPresent = (item)=> (item == x[0] || item == x[1] || item == x[2] || item == x[3]); 
             if (!(display.textContent.split('').some(xPresent))) { //fix this
                 return display.innerText = `${display.innerText}` + `${element.textContent}`;
             } else if (display.textContent.split('').some(xPresent)) {
@@ -127,27 +118,27 @@ const operatorVar =
                 let y = Number(storeVariableTwo());
                 let z = storeOperator();
 
-                const ourSolution = operate(x, y, z);
+                const ourSolution = operate(x,y,z);
                 display.innerText = `${ourSolution.toFixed(2)}`;
-                return display.innerText = `${display.innerText}` + `${element.textContent}`;
+                return display.innerText = `${display.innerText}`+`${element.textContent}`;
             }
         });
     });
 
 //operator variable
 const storeOperator = () => {
-    let xIndex = () => {
+    let xIndex = ()=> {
         let newArray = display.innerText.split('');
         let filteredArray = newArray.filter((item) => {
             for (i of x) {
-                if (i == item) {
+                if (i==item) {
                     return item;
                 }
             }
         }); return filteredArray[0];
     }
     let indexOfOperator = display.innerText.split('').indexOf(xIndex()); //fix this
-    let operatorString = display.innerText.split('').slice(indexOfOperator, indexOfOperator + 1).join('');
+    let operatorString = display.innerText.split('').slice(indexOfOperator, indexOfOperator+1).join('');
     return operatorString;
 };
 storeOperator();
@@ -174,12 +165,12 @@ const operate = function (numA, numB, operator) {
 };
 
 //equal button click management
-const findSolution = equals.addEventListener('click', () => {
+const findSolution = equals.addEventListener('click',()=>{
     let a = Number(storeVariableOne());
     let b = Number(storeVariableTwo());
     let c = storeOperator();
 
-    let xIndex = () => {
+    let xIndex = ()=> {
         let newArray = display.innerText.split('');
         let filteredArray = newArray.filter((item) => {
             for (i of x) {
@@ -190,23 +181,20 @@ const findSolution = equals.addEventListener('click', () => {
         }); return filteredArray[0];
     }
     let indexOfOperator = display.innerText.split('').indexOf(xIndex()); //finds divide
-    let afterDivision = display.innerText.split('').slice(indexOfOperator + 1).join('');
-
-    if (display.innerText == '' || afterDivision == "0") {
+    let afterDivision = display.innerText.split('').slice(indexOfOperator+1).join('');
+    
+    if(display.innerText == '' || afterDivision=="0"){
         return display.innerText = 'ERROR';
-    }
+    } 
 
-    const ourSolution = operate(a, b, c);
-
-    shouldResetScreen = true;
-
+    const ourSolution = operate(a,b,c);
     return display.innerText = `${ourSolution.toFixed(2)}`;
-
+    
 });
-
+        
 
 //clear button click management
 
-const clearDisplay = clear.addEventListener('click', () => {
+const clearDisplay = clear.addEventListener('click',()=>{
     return display.textContent = '';
 });
